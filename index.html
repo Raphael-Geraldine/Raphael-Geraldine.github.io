@@ -210,9 +210,20 @@
             min-height: auto;
         }
         
-        .banner-card .card-header { margin-bottom: 0; }
+        .banner-card .card-header { margin-bottom: 0;}
         .banner-card .card-content { flex-direction: row; align-items: center; width: 100%; padding: 0; }
         .banner-card .card-subtitle { margin-top: 0; margin-left: auto; }
+
+        @media (max-width: 600px) {
+            .banner-card .card-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .banner-card .card-subtitle {
+                margin-left: 0;
+                margin-top: 0.3rem; /* Dá um respiro para não colar no título */
+            }
+        }
 
         /* =========================================
            4. ANIMAÇÕES
@@ -233,7 +244,7 @@
             
             <h1>Raphael Geraldine</h1>
             <p class="pitch">
-                Eng. de Computação @ UTFPR • Fascinado por traduzir baixo nível e problemas complexos em experiências de uso fluidas no ecossistema Apple.
+                Eng. de Computação @ UTFPR • Fascinado por traduzir problemas complexos em experiências de uso fluidas no ecossistema Apple.
             </p>
         </header>
 
