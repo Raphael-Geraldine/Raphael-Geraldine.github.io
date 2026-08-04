@@ -1,340 +1,904 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raphael Geraldine</title>
-    <style>
-        /* =========================================
-           0. RESET & TIPOGRAFIA 
-           ========================================= */
-        :root {
-            --bg-color: #000000;
-            --card-bg: rgba(28, 28, 30, 0.6);
-            --card-border: rgba(255, 255, 255, 0.08);
-            --text-primary: #f5f5f7;
-            --text-secondary: #86868b;
-            --accent: #0A84FF;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raphael Geraldine</title>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
+  <link rel="icon" type="image/png" href="assets/logo.png">
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            display: flex;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 4rem 1.5rem;
-            background-image: radial-gradient(circle at 50% -20%, #1c1c20 0%, #000000 70%);
-        }
+  <style>
+    /* =========================================
+      Música
+      ========================================= */
+    .criatividade-section {
+      width: 100%;
+    }
 
-        .container {
-            max-width: 680px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 3rem;
-        }
+    .bento-box-card {
+      background: linear-gradient(145deg, rgba(28, 28, 30, 1) 0%, rgba(10, 132, 255, 0.15) 100%);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
-        /* =========================================
-           1. HEADER 
-           ========================================= */
-        .header {
-            text-align: center;
-            animation: fadeUp 0.8s ease-out both;
-        }
+    .bento-box-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
 
-        .profile-pic {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 0.5rem;
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6); 
-        }
+    .bento-box-link {
+      display: flex;
+      flex-direction: column-reverse;
+      padding: 24px;
+      gap: 20px;
+      text-decoration: none;
+      color: inherit;
+    }
 
-        h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: -0.8px;
-            margin-bottom: 0.5rem;
-        }
+    @media (min-width: 600px) {
+      .bento-box-link {
+        display: grid;
+        grid-template-columns: 1fr 240px;
+        align-items: center;
+        margin: auto;
+        gap: 32px;
+      }
+    }
 
-        .pitch {
-            color: var(--text-secondary);
-            font-size: 1.05rem;
-            line-height: 1.4;
-            font-weight: 400;
-            max-width: 85%;
-            margin: 0 auto 0 auto;
-        }
+    .bento-box-info {
+      display: flex;
+      flex-direction: column;
+    }
 
-        /* =========================================
-           2. PAINEL DE PILARES
-           ========================================= */
-        .pillars-panel {
-            background: var(--surface);
-            border: 1px solid var(--border-light);
-            border-radius: 24px;
-            padding: 0rem;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.2rem;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            animation: fadeUp 0.8s ease-out both;
-        }
+    .bento-box-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #c084fc;
+      margin-bottom: 8px;
+    }
 
-        @media (min-width: 650px) {
-            .pillars-panel { 
-                grid-template-columns: repeat(3, 1fr); 
-                gap: 1.5rem;
-            }
-            
-            /* Adiciona as divisórias verticais apenas entre as colunas no desktop */
-            .pillar-item:not(:last-child) {
-                border-right: 1px solid rgba(255, 255, 255, 0.476);
-                padding-right: 1.2rem;
-            }
-        }
+    .bento-box-heading {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 10px 0;
+      line-height: 1.3;
+    }
 
-        .pillar-item h3 {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-main);
-            margin-bottom: 0.4rem;
-        }
+    .bento-box-text {
+      font-size: 0.875rem;
+      color: #a1a1aa;
+      line-height: 1.6;
+      margin: 0 0 16px 0;
 
-        .pillar-item p {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            line-height: 1.4;
-        }
+      text-align: justify;
 
-        /* =========================================
-           3. BENTO GRID - PROJETOS
-           ========================================= */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-            animation: fadeUp 0.8s ease-out 0.2s both;
-        }
+      -webkit-hyphens: auto;
+      -ms-hyphens: auto;
+      hyphens: auto;
+    }
 
-        @media (min-width: 600px) {
-            .bento-grid { 
-                grid-template-columns: repeat(2, 1fr); 
-            }
-            .span-2 { 
-                grid-column: span 2; 
-            }
-        }
+    .bento-box-cta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: auto;
+      color: #f4f4f5;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
 
-        .bento-card {
-            position: relative;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            overflow: hidden;
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s;
-            min-height: 140px;
-        }
+    .bento-box-arrow {
+      width: 16px;
+      height: 16px;
+      stroke: #c084fc;
+      transition: transform 0.2s ease;
+    }
 
-        .bento-card:hover { 
-            background: rgba(44, 44, 46, 0.8); 
-            transform: scale(0.98); 
-        }
+    .bento-box-card:hover .bento-box-arrow {
+      transform: translate(1.5px, -1.5px);
+    }
 
-        /* Layout interno dos cards */
-        .card-content {
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
-            z-index: 2;
-        }
+    .bento-box-thumb {
+      margin: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 240px;
+      height: 240px;
+      flex-shrink: 0;
+    }
 
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 0.8rem;
-        }
+    .bento-box-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
 
-        .card-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            object-fit: cover;
-            background: rgba(255, 255, 255, 0.1);
-        }
+    /* =========================================
+      RESET & TIPOGRAFIA 
+      ========================================= */
+    :root {
+      --bg-color: #000000;
+      --card-bg: rgba(28, 28, 30, 0.6);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text-primary: #f5f5f7;
+      --text-secondary: #86868b;
+      --accent: #0A84FF;
+    }
 
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            line-height: 1.2;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
 
-        .card-subtitle {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-            margin-top: auto;
-        }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 4rem 1.5rem;
+      background-image: radial-gradient(circle at 50% -20%, #1c1c20 0%, #000000 70%);
+    }
 
-        /* Estilo específico para o Jogo */
-        .highlight-card {
-            background: linear-gradient(145deg, rgba(28,28,30,1) 0%, rgba(10,132,255,0.15) 100%);
-        }
+    .container {
+      max-width: 680px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+      animation: fadeUp 0.8s ease-out both;
+    }
 
-        /* Card do LinkedIn estilo banner */
-        .banner-card {
-            flex-direction: row;
-            align-items: center;
-            padding: 1rem 1.5rem;
-            min-height: auto;
-        }
-        
-        .banner-card .card-header { margin-bottom: 0;}
-        .banner-card .card-content { flex-direction: row; align-items: center; width: 100%; padding: 0; }
-        .banner-card .card-subtitle { margin-top: 0; margin-left: auto; }
+    /* =========================================
+      HEADER 
+      ========================================= */
+    .header {
+      text-align: center;
+    }
 
-        @media (max-width: 600px) {
-            .banner-card .card-content {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .banner-card .card-subtitle {
-                margin-left: 0;
-                margin-top: 0.3rem; /* Dá um respiro para não colar no título */
-            }
-        }
+    .profile-pic {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 0.5rem;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+    }
 
-        /* =========================================
-           4. ANIMAÇÕES
-           ========================================= */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.8px;
+      margin-bottom: 0.5rem;
+    }
+
+    .pitch {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      line-height: 1.4;
+      font-weight: 400;
+      max-width: 95%;
+      margin: 0 auto 0 auto;
+    }
+
+    /* =========================================
+      PROJETOS
+      ========================================= */
+
+    .projects-section {
+      width: 100%;
+      position: relative;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 20px;
+      padding: 0 4px;
+    }
+
+    .section-header-text {
+      flex: 1;
+    }
+
+    .section-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #c084fc;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 8px 0 16px 0;
+      letter-spacing: -0.02em;
+    }
+
+    .section-description {
+      font-size: 0.95rem;
+      color: #a1a1aa;
+      line-height: 1.5;
+      margin: 0;
+      max-width: 570px;
+
+      text-align: justify;
+      -webkit-hyphens: auto;
+      -ms-hyphens: auto;
+      hyphens: auto;
+    }
+
+    .carousel-controls {
+      display: none;
+    }
+
+    @media (min-width: 700px) {
+      .carousel-controls {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .nav-btn {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        cursor: pointer;
+        transition: background 0.2s, border-color 0.2s;
+      }
+
+      .nav-btn:hover {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.25);
+      }
+    }
+
+    .carousel-fade {
+      position: absolute;
+      bottom: 10px;
+      width: 30px;
+      height: 300px;
+      z-index: 20;
+      pointer-events: none;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .carousel-fade.fade-right {
+      right: 0;
+      background: linear-gradient(to left, rgba(12, 12, 14, 1) 10%, rgba(18, 18, 20, 0) 100%);
+    }
+
+    .carousel-fade.fade-left {
+      left: 0;
+      background: linear-gradient(to right, rgba(12, 12, 14, 1) 10%, rgba(18, 18, 20, 0) 100%);
+    }
+
+    .carousel-fade.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .carousel-container {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      gap: 16px !important;
+      width: 100% !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      scroll-snap-type: x mandatory;
+      padding: 12px 0 12px 0;
+
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .carousel-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .project-card {
+      flex: 0 0 280px !important;
+      width: 280px !important;
+      height: 290px !important;
+      scroll-snap-align: start;
+
+      background: #1c1c1e;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      overflow: hidden;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+
+      opacity: 0.85;
+      transition: transform 0.25s ease, border-color 0.25s ease, opacity 0.25s ease;
+    }
+
+    .project-card:hover {
+      opacity: 1;
+      transform: translateY(-4px);
+      border-color: rgba(192, 132, 252, 0.4);
+    }
+
+    .project-media {
+      width: 100% !important;
+      height: 200px !important;
+      background: #0a0a0a;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .project-img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      object-position: center !important;
+      display: block;
+    }
+
+    .project-info {
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex: 1;
+    }
+
+    .project-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin: 0 0 4px 0;
+      line-height: 1.2;
+    }
+
+    .project-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: auto;
+    }
+
+    .project-sub {
+      margin: 0;
+      font-size: 0.8rem;
+      color: #a1a1aa;
+      line-height: 1.4;
+    }
+
+    .project-arrow {
+      width: 14px;
+      height: 14px;
+      stroke: #c084fc;
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 4px;
+      transform: translateY(-1px);
+      transition: transform 0.2s ease;
+    }
+
+    .project-card:hover .project-arrow {
+      transform: translate(2px, -2px);
+    }
+
+
+    /* =========================================
+      EXTENSÃO
+      ========================================= */
+    .extension-section {
+      width: 100%;
+    }
+
+    .section-title-ext {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 8px 0 16px 0;
+      letter-spacing: -0.02em;
+    }
+
+    .extension-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    @media (min-width: 768px) {
+      .extension-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .extension-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    @media (max-width: 768px) {
+      .extension-card {
+        margin-left: 3%;
+        margin-right: 3%;
+      }
+    }
+
+    .extension-thumb {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: rgba(0, 0, 0, 0.4);
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .extension-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .extension-content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .extension-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #0a84ff;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .extension-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 8px 0;
+      line-height: 1.2;
+    }
+
+    .extension-desc {
+      font-size: 0.85rem;
+      color: #a1a1aa;
+      line-height: 1.5;
+      margin: 0 0 16px 0;
+
+      text-align: justify;
+
+      -webkit-hyphens: auto;
+      -ms-hyphens: auto;
+      hyphens: auto;
+    }
+
+    .extension-tag {
+      font-size: 0.75rem;
+      color: #71717a;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 4px 10px;
+      border-radius: 6px;
+      width: fit-content;
+      margin-top: auto;
+    }
+
+    /* =========================================
+      QUEM SOU EU?
+      ========================================= */
+    .about-section {
+      width: 100%;
+      margin-bottom: 3rem;
+      padding: 0 12px;
+    }
+
+    .about-container {
+      max-width: 680px;
+    }
+
+    .about-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #c084fc;
+    }
+
+    .about-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 8px 0 16px 0;
+      letter-spacing: -0.02em;
+    }
+
+    .about-text {
+      font-size: 1rem;
+      color: #a1a1aa;
+      line-height: 1.7;
+      margin: 0 0 24px 0;
+
+      text-align: justify;
+
+      -webkit-hyphens: auto;
+      -ms-hyphens: auto;
+      hyphens: auto;
+    }
+
+    .linkedin-text-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .linkedin-icon {
+      width: 18px;
+      height: 18px;
+      color: #c084fc;
+    }
+
+    .arrow-icon {
+      width: 16px;
+      height: 16px;
+      stroke: #c084fc;
+      transition: transform 0.2s ease;
+    }
+
+    .linkedin-text-link:hover {
+      color: #c084fc;
+    }
+
+    .linkedin-text-link:hover .arrow-icon {
+      transform: translate(1.5px, -1.5px);
+    }
+
+    /* =========================================
+      ANIMAÇÃO
+      ========================================= */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-    <div class="container">
-        
-        <!-- HEADER -->
-        <header class="header">
-            <img src="assets/RaphaelProfile.jpg" alt="Raphael Geraldine" class="profile-pic" onerror="this.src='https://ui-avatars.com/api/?name=Raphael+Geraldine&background=1c1c1e&color=fff&size=200'">
-            
-            <h1>Raphael Geraldine</h1>
-            <p class="pitch">
-                Eng. de Computação @ UTFPR • Fascinado por traduzir problemas complexos em experiências de uso fluidas em ambiente Apple.
-            </p>
-        </header>
+  <div class="container">
 
-        <!-- PILARES -->
-        <div class="pillars-panel">
-            <div class="pillar-item">
-                <h3>⚙️ Engenharia & Resiliência</h3>
-                <p>Do C/C++ a soluções para Apple Silicon. Gosto de resolver o que parece impossível.</p>
-            </div>
-            <div class="pillar-item">
-                <h3>🍎 Ambiente Apple</h3>
-                <p>Cuidado minucioso com a UX. Próximo passo: dominar o Swift e design adaptativo.</p>
-            </div>
-            <div class="pillar-item">
-                <h3>🎸 Criatividade & Colaboração</h3>
-                <p>Multi-instrumentista. A música me ensinou a improvisar, escutar e construir em equipe.</p>
-            </div>
+    <!-- HEADER -->
+    <header class="header">
+      <img src="assets/RaphaelProfile.jpg" alt="Raphael Geraldine" class="profile-pic"
+        onerror="this.src='https://ui-avatars.com/api/?name=Raphael+Geraldine&background=1c1c1e&color=fff&size=200'">
+
+      <h1>Raphael Geraldine</h1>
+      <p class="pitch">
+        Eng. de Computação @ UTFPR • Fascinado por traduzir problemas complexos em experiências de uso fluidas no
+        ecossistema Apple.
+      </p>
+    </header>
+
+    <section class="projects-section">
+      <div class="section-header">
+        <div class="section-header-text">
+          <span class="section-badge">Portfólio</span>
+          <h2 class="section-title">Projetos</h2>
+          <p class="section-description">
+            Do C/C++ ao Apple Silicon, gosto de resolver o que parece impossível com cuidado na UX. Meu próximo passo é
+            dominar Swift e design adaptativo.
+          </p>
         </div>
 
-        <!-- BENTO GRID DE PROJETOS -->
-        <main class="bento-grid">
-            
-            <!-- Jogo -->
-            <a href="https://github.com/Raphael-Geraldine/O-Equilibrio-da-Forca/tree/build-macos" class="bento-card span-2 highlight-card" target="_blank">
-                <div class="card-content">
-                    <div class="card-header">
-                        <img src="assets/Jogo.png" alt="JogoMacOS" class="card-icon" onerror="this.style.display='none'">
-                        <span class="card-title">Jogo Nativo para macOS</span>
-                    </div>
-                    <span class="card-subtitle">C++ • Disponível em .dmg para Apple Silicon</span>
-                </div>
-            </a>
+        <div class="carousel-controls">
+          <button class="nav-btn"
+            onclick="document.querySelector('.carousel-container').scrollBy({left: -300, behavior: 'smooth'})">‹</button>
+          <button class="nav-btn"
+            onclick="document.querySelector('.carousel-container').scrollBy({left: 300, behavior: 'smooth'})">›</button>
+        </div>
+      </div>
 
-            <!-- Quartus -->
-            <a href="https://github.com/Raphael-Geraldine/Intel-Quartus-Prime-macOS-Apple-Silicon" class="bento-card" target="_blank">
-                <div class="card-content">
-                    <div class="card-header">
-                        <img src="assets/PinPlanner.jpg" alt="Quartus" class="card-icon" onerror="this.style.display='none'">
-                        <span class="card-title">Intel Quartus no Mac M4</span>
-                    </div>
-                    <span class="card-subtitle">Eng. Reversa • Virtualização</span>
-                </div>
-            </a>
+      <div class="carousel-fade fade-left hidden"></div>
+      <div class="carousel-fade fade-right"></div>
+      <!-- BENTO GRID DE PROJETOS -->
 
-            <!-- Laser -->
-            <a href="https://github.com/Raphael-Geraldine/Arquitetura-de-Comunicacao-Optica-Laser" class="bento-card" target="_blank">
-                <div class="card-content">
-                    <div class="card-header">
-                        <img src="assets/Laser.png" alt="Laser" class="card-icon" onerror="this.style.display='none'">
-                        <span class="card-title">Comunicação por Laser</span>
-                    </div>
-                    <span class="card-subtitle">Alcance de 37,4m • Registradores</span>
-                </div>
-            </a>
+      <div class="carousel-container">
+        <!-- Card 1 -->
+        <a href="https://github.com/Raphael-Geraldine/O-Equilibrio-da-Forca/tree/build-macos" target="_blank"
+          class="project-card">
+          <div class="project-media">
+            <img src="assets/fase2.png" alt="Jogo macOS" class="project-img" onerror="this.style.display='none'">
+          </div>
+          <div class="project-info">
+            <h3 class="project-title">Jogo Nativo para macOS</h3>
+            <p class="project-sub">
+              C++ • POO • SFML • Disponível em .dmg para Apple Silicon
+              <svg class="project-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </p>
+          </div>
+        </a>
 
-            <!-- Dupla -->
-            <a href="https://www.instagram.com/neonthingmusic" class="bento-card" target="_blank">
-                <div class="card-content">
-                    <div class="card-header">
-                        <img src="assets/NeonThing.png" alt="DuoNeonThing" class="card-icon" onerror="this.style.display='none'">
-                        <span class="card-title">Dupla de Blues/Rock</span>
-                    </div>
-                    <span class="card-subtitle">Shows ao Vivo • Instagram</span>
-                </div>
-            </a>
+        <!-- Card 2 -->
+        <a href="https://github.com/Raphael-Geraldine/Intel-Quartus-Prime-macOS-Apple-Silicon" target="_blank"
+          class="project-card">
+          <div class="project-media">
+            <img src="assets/PinPlanner.jpg" alt="Quartus" class="project-img" onerror="this.style.display='none'">
+          </div>
+          <div class="project-info">
+            <h3 class="project-title">Intel Quartus no Mac M4</h3>
+            <p class="project-sub">
+              Eng. Reversa • Virtualização • Rosetta 2 • x86_64 vs aarch64
+              <svg class="project-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </p>
+          </div>
+        </a>
 
-            <!-- GarageBand -->
-            <a href="https://drive.google.com/drive/folders/1cVJyskbQyoVnzOaIti2VzFt4u2r5b7Fx?usp=sharing" class="bento-card" target="_blank">
-                <div class="card-content">
-                    <div class="card-header">
-                        <img src="assets/RaphaGuitar.PNG" alt="Guitarra" class="card-icon" onerror="this.style.display='none'">
-                        <span class="card-title">Gravações no GarageBand</span>
-                    </div>
-                    <span class="card-subtitle">Cordas • Teclas • Harmônica</span>
-                </div>
-            </a>
+        <!-- Card 3 -->
+        <a href="https://github.com/Raphael-Geraldine/Arquitetura-de-Comunicacao-Optica-Laser" target="_blank"
+          class="project-card">
+          <div class="project-media">
+            <img src="assets/Laser.png" alt="Laser" class="project-img" onerror="this.style.display='none'">
+          </div>
+          <div class="project-info">
+            <h3 class="project-title">Comunicação por Laser</h3>
+            <p class="project-sub">
+              Alcance de 37,4m • Registradores • Software • Protocolo Próprio
+              <svg class="project-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </p>
+          </div>
+        </a>
+
+        <!-- Card 4 -->
+        <a href="https://github.com/Raphael-Geraldine/8-Puzzle" target="_blank" class="project-card">
+          <div class="project-media">
+            <img src="assets/8puzzle.png" alt="Laser" class="project-img" onerror="this.style.display='none'">
+          </div>
+          <div class="project-info">
+            <h3 class="project-title">8-Puzzle</h3>
+            <p class="project-sub">
+              Python • Pygame • Jogo
+              <svg class="project-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </p>
+          </div>
+        </a>
+
+        <!-- Card 5 -->
+        <a href="https://github.com/Raphael-Geraldine/Simulador-de-Colisoes" target="_blank" class="project-card">
+          <div class="project-media">
+            <img src="assets/Simulador.png" alt="Laser" class="project-img" onerror="this.style.display='none'">
+          </div>
+          <div class="project-info">
+            <h3 class="project-title">Simulador de Colisões</h3>
+            <p class="project-sub">
+              Simulação • Física • Python
+              <svg class="project-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="extension-section">
+      <h2 class="section-title-ext">Extensão & Academia</h2>
+
+      <div class="extension-grid">
+        <!-- Card 1: PET -->
+        <div class="extension-card">
+          <div class="extension-thumb">
+            <img src="assets/PETECO.jpeg" alt="Grupo PET" class="extension-img" onerror="this.style.display='none'">
+          </div>
+          <div class="extension-content">
+            <span class="extension-badge">Pesquisa, Ensino & Extensão</span>
+            <h3 class="extension-title">Grupo PET</h3>
+            <p class="extension-desc">
+              Participação ativa em projetos de ensino, pesquisa e extensão focados em Eng. de Computação; trabalho em
+              equipe e disseminação de conhecimento técnico da área.
+            </p>
+            <span class="extension-tag">PET Engenharia</span>
+          </div>
+        </div>
+
+        <!-- Card 2: Crossbots -->
+        <div class="extension-card">
+          <div class="extension-thumb">
+            <img src="assets/crossbots.jpeg" alt="Equipe de Robótica" class="extension-img"
+              onerror="this.style.display='none'">
+          </div>
+          <div class="extension-content">
+            <span class="extension-badge">Desenvolvimento em Equipe</span>
+            <h3 class="extension-title">Equipe de Robótica</h3>
+            <p class="extension-desc">
+              Membro da equipe da Crossbots na UTFPR. Atuação na programação e integração de sistemas, lógica de
+              controle e desenvolvimento em equipe para robôs.
+            </p>
+            <span class="extension-tag">Robótica (software)</span>
+          </div>
+        </div>
+
+        <!-- Card 3: Monitoria -->
+        <div class="extension-card">
+          <div class="extension-thumb">
+            <img src="assets/monitoria.jpg" alt="Monitoria Voluntária" class="extension-img"
+              onerror="this.style.display='none'">
+          </div>
+          <div class="extension-content">
+            <span class="extension-badge">Ensino & Didática</span>
+            <h3 class="extension-title">Monitoria Voluntária</h3>
+            <p class="extension-desc">
+              Durante meu Ensino Médio, auxiliei no ensino e resolução de problemas em Matemática e Física.
+              Desenvolvimento de habilidades de comunicação clara e didática.
+            </p>
+            <span class="extension-tag">Monitoria de Exatas</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="criatividade-section">
+      <h2 class="section-title-ext">Criatividade & Colaboração</h2>
+      <article class="bento-box-card">
+        <a href="https://www.instagram.com/neonthingmusic" target="_blank" rel="noopener noreferrer"
+          class="bento-box-link">
+
+          <div class="bento-box-info">
+            <span class="bento-box-badge">Dupla de Blues/Rock</span>
+            <h2 class="bento-box-heading">Do GarageBand aos palcos</h2>
+            <p class="bento-box-text">
+              Do quarto, com o GarageBand, até a prática. A música me ensinou a improvisar, escutar e construir em
+              equipe. Transito por cinco instrumentos e levo essa mesma disciplina plural aos palcos.
+            </p>
+
+            <div class="bento-box-cta">
+              <span class="bento-box-subtext">Shows ao Vivo • Instagram</span>
+              <svg class="bento-box-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </div>
+          </div>
+
+          <div class="bento-box-thumb">
+            <img src="assets/NeonThing.png" alt="Dupla Neon Thing" class="bento-box-img"
+              onerror="this.style.display='none'">
+          </div>
+
+        </a>
+      </article>
+    </section>
+
+    <section class="about-section">
+      <div class="fade-wrapper">
+        <div class="about-container">
+
+          <div class="about-content">
+            <span class="about-badge">Sobre mim</span>
+            <h2 class="about-title">Quem sou eu?</h2>
+
+            <p class="about-text">
+              Sou estudante do 4º período de Engenharia de Computação na UTFPR, movido pela curiosidade de entender como
+              as coisas funcionam por baixo do capô. Entretanto, o que mais me motiva
+              é transformar esse entendimento em experiências que as pessoas realmente sintam prazer em usar. Uso macOS
+              desde o High Sierra, o que diz bastante
+              sobre minha relação com a Apple: gosto tanto de usar quanto de revirar, entender e otimizar. Fora do
+              código, toco guitarra, violão, piano, synth e harmônica; e pratico
+              Jiu-Jitsu há 14 anos, algo que moldou minha disciplina e minha capacidade de manter a calma sob pressão.
+            </p>
 
             <!-- LinkedIn -->
-            <a href="https://www.linkedin.com/in/raphael-geraldine" class="bento-card span-2 banner-card" target="_blank">
-                <div class="card-content">
-                    <div class="card-header">
-                        <img src="assets/Linkedin.webp" alt="LinkedIn" class="card-icon" style="width: 32px; height: 32px;" onerror="this.style.display='none'">
-                        <span class="card-title" style="font-size: 1rem;">LinkedIn</span>
-                    </div>
-                    <span class="card-subtitle">Perfil Profissional & Trajetória ↗</span>
-                </div>
+            <a href="https://www.linkedin.com/in/raphael-geraldine/" target="_blank" rel="noopener noreferrer"
+              class="linkedin-text-link">
+              <svg class="linkedin-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.7a1.62 1.62 0 1 0 0 3.24 1.62 1.62 0 0 0 0-3.24z" />
+              </svg>
+              <span>Perfil Profissional & Trajetória</span>
+              <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
             </a>
+          </div>
 
-        </main>
-    </div>
+        </div>
+      </div>
+    </section>
 
+  </div>
+
+  <script>
+    const container = document.querySelector('.carousel-container');
+    const fadeLeft = document.querySelector('.carousel-fade.fade-left');
+    const fadeRight = document.querySelector('.carousel-fade.fade-right');
+
+    function updateFades() {
+      const isAtStart = container.scrollLeft <= 5;
+      const isAtEnd = container.scrollLeft + container.clientWidth >= container.scrollWidth - 5;
+
+      if (isAtStart) {
+        fadeLeft.classList.add('hidden');
+      } else {
+        fadeLeft.classList.remove('hidden');
+      }
+
+      if (isAtEnd) {
+        fadeRight.classList.add('hidden');
+      } else {
+        fadeRight.classList.remove('hidden');
+      }
+    }
+
+    container.addEventListener('scroll', updateFades);
+    window.addEventListener('resize', updateFades);
+    updateFades();
+  </script>
 </body>
+
 </html>
